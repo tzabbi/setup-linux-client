@@ -9,6 +9,8 @@
       - wget
       - gpg
       - git
+      - cascadia-code-fonts
+      - htop
       state: present
 
   - name: Import VSCode key on RedHat based Linux
@@ -41,7 +43,22 @@
     community.general.flatpak:
       name: org.gnome.Extensions
       state: present
+
+  - name: Install Bitwarden
+    community.general.flatpak:
+      name: com.bitwarden.desktop
+      state: present
+
+  - name: Install Signal
+    community.general.flatpak:
+      name: org.signal.Signal
+      state: present
   
+  - name: Install Thunderbird
+    community.general.flatpak:
+      name: org.mozilla.Thunderbird
+      state: present
+
   - name: Add content to .bashrc
     blockinfile:
       path: "{{ ansible_env.HOME }}/.bashrc"

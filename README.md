@@ -25,3 +25,10 @@ pip install ansible
 ```bash
  ansible-playbook
 ```
+
+
+##TODO:
+- change structure to best practice Ansible: https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html
+- change git defaults
+- add update software task
+- add task for fedora: gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
