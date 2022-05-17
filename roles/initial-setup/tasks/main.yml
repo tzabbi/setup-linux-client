@@ -8,7 +8,16 @@
     - git
     - cascadia-code-fonts
     - htop
-    state: present
+    - curl
+  state: present
+
+- name: Install redhat based packages
+  become: true
+  package:
+    name: 
+    - podman
+  state: present
+  when: ansible_facts['os_family'] == "RedHat"
 
 - name: Import VSCode key on RedHat based Linux
   become: true
