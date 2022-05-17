@@ -1,0 +1,15 @@
+- name: "Download kubectl and checksum"
+  become: true
+  command:
+    cmd: |
+      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+- name: "Compare checksums"    
+  set_fact:
+    checksum_result: 
+
+- name: "Install kubectl"
+  become: true
+  command:
+    cmd: "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"
