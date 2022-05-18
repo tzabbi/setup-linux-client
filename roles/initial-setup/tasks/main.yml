@@ -23,11 +23,13 @@
   community.crypto.openssh_keypair:
     type: rsa 
     size: 4096
-    passphrase: {{ ssh_rsa_password }}    
+    comment: "{{ ssh_rsa.comment }}"
+    passphrase: {{ ssh_rsa.password }}    
     path: /tmp/id_ssh_rsa
 
 - name: Generate an ed25519 OpenSSH keypair
   community.crypto.openssh_keypair:
     type: ed25519 
-    passphrase: {{ ssh_ed25519_password }}    
+    comment: "{{ ssh_ed25519.comment }}"
+    passphrase: {{ ssh_ed25519.password }}    
     path: /tmp/id_ssh_ed25519

@@ -13,5 +13,10 @@ flatpaks:
   - org.signal.Signal
   - org.mozilla.Thunderbird
 
-ssh_ed25519_password: "<password>"
-ssh_rsa_password: "<password>"
+ssh_rsa:
+  password: "<password>"
+  comment: "<comment>"
+
+ssh_ed25519:
+  password: "<password>"
+  comment: "<comment>"
