@@ -1,43 +1,4 @@
 ---
-- name: Install packages
-  become: true
-  package:
-    name: 
-    - wget
-    - gpg
-    - git
-    - cascadia-code-fonts
-    - htop
-    - curl
-    state: present
-
-- name: Install redhat based packages
-  become: true
-  package:
-    name: 
-    - podman
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: Import VSCode key on RedHat based Linux
-  become: true
-  rpm_key:
-    key: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: Import VSCode key on RedHat based Linux
-  become: true
-  command:
-    cmd: sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-  when: ansible_facts['os_family'] == "RedHat"
-
-- name: Install VSCode on Debian based Linux
-  become: true
-  get_url:
-    url: https://go.microsoft.com/fwlink/?LinkID=760868
-  when: ansible_facts['os_family'] == "Debian"
-
 - name: Update all packages to the lastest state
   become: true
   package:
@@ -48,31 +9,6 @@
   command:
     cmd: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
   when: ansible_facts['os_family'] == "RedHat"
-
-- name: Install Spotify
-  community.general.flatpak: 
-    name: com.spotify.Client
-    state: present
-
-- name: Install Gnome Tweaks
-  community.general.flatpak:
-    name: org.gnome.Extensions
-    state: present
-
-- name: Install Bitwarden
-  community.general.flatpak:
-    name: com.bitwarden.desktop
-    state: present
-
-- name: Install Signal
-  community.general.flatpak:
-    name: org.signal.Signal
-    state: present
-  
-- name: Install Thunderbird
-  community.general.flatpak:
-    name: org.mozilla.Thunderbird
-    state: present
   
 - name: Add content to .bashrc
   blockinfile:
@@ -82,7 +18,7 @@
         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
       }
       export PS1='\[\e[0;1;38;5;34m\]\u\[\e[0;1;38;5;34m\]@\[\e[0;1;38;5;34m\]\h\[\e[0;1m\]:\[\e[0;1;38;5;33m\]\w \[\e[0;91m\]$(parse_git_branch)\[\e[0m\]\$ \[\e[0m\]'
-    
+
 - name: Generate an RSA OpenSSH keypair 
   community.crypto.openssh_keypair:
     type: rsa 
