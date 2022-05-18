@@ -1,0 +1,17 @@
+packages:
+  - wget
+  - gpg
+  - git
+  - curl
+  - htop
+  - cascadia-code-fonts
+
+flatpaks:
+  - com.spotify.Client
+  - org.gnome.Extensions
+  - com.bitwarden.desktop
+  - org.signal.Signal
+  - org.mozilla.Thunderbird
+
+ssh_ed25519_password: "<password>"
+ssh_rsa_password: "<password>"
