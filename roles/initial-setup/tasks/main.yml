@@ -1,4 +1,8 @@
 ---
+- name: Include vars
+  include_vars: 
+    file: ./configuration.yml
+    
 - name: Update all packages to the lastest state
   become: true
   package:
@@ -24,12 +28,12 @@
     type: rsa 
     size: 4096
     comment: "{{ ssh_rsa.comment }}"
-    passphrase: {{ ssh_rsa.password }}    
-    path: /tmp/id_ssh_rsa
+    passphrase: "{{ ssh_rsa.password }}"    
+    path: ~/.ssh/id_ssh_rsa
 
 - name: Generate an ed25519 OpenSSH keypair
   community.crypto.openssh_keypair:
     type: ed25519 
     comment: "{{ ssh_ed25519.comment }}"
-    passphrase: {{ ssh_ed25519.password }}    
-    path: /tmp/id_ssh_ed25519
+    passphrase: "{{ ssh_ed25519.password }}"
+    path: ~/.ssh/id_ssh_ed25519

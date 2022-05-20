@@ -1,8 +1,4 @@
----
-- name: Include vars
-  include_vars: 
-    file: ./configuration.yml
-  
+---  
 - hosts: localhost
   roles:
   - role: initial-setup

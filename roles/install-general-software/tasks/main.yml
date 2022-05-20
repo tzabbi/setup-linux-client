@@ -1,3 +1,7 @@
+- name: Include vars
+  include_vars: 
+    file: ./configuration.yml
+
 - name: Install packages
   become: true
   package:
@@ -34,6 +38,6 @@
 
 - name: Install {{ item }}
   community.general.flatpak: 
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   loop: "{{ flatpaks }}"
