@@ -1,17 +1,19 @@
 packages:
-  - wget
-  - gpg
-  - git
-  - curl
-  - htop
   - cascadia-code-fonts
+  - curl
+  - git
+  - gpg
+  - htop
+  - wget
+  - yakuake
 
 flatpaks:
-  - com.spotify.Client
-  - org.gnome.Extensions
   - com.bitwarden.desktop
-  - org.signal.Signal
+  - org.flameshot.Flameshot
+  - org.gnome.Extensions
   - org.mozilla.Thunderbird
+  - org.signal.Signal
+  - com.spotify.Client
 
 ssh_rsa:
   password: "<password>"
