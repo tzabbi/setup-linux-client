@@ -29,11 +29,11 @@
     size: 4096
     comment: "{{ ssh_rsa.comment }}"
     passphrase: "{{ ssh_rsa.password }}"    
-    path: ~/.ssh/id_ssh_rsa
+    path: ~/.ssh/id_rsa
 
 - name: Generate an ed25519 OpenSSH keypair
   community.crypto.openssh_keypair:
     type: ed25519 
     comment: "{{ ssh_ed25519.comment }}"
     passphrase: "{{ ssh_ed25519.password }}"
-    path: ~/.ssh/id_ssh_ed25519
+    path: ~/.ssh/id_ed25519
