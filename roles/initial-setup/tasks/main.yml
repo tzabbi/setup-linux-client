@@ -30,6 +30,7 @@
     comment: "{{ ssh_rsa.comment }}"
     passphrase: "{{ ssh_rsa.password }}"    
     path: ~/.ssh/id_rsa
+  when: ssh_rsa.create == true
 
 - name: Generate an ed25519 OpenSSH keypair
   community.crypto.openssh_keypair:
@@ -37,3 +38,4 @@
     comment: "{{ ssh_ed25519.comment }}"
     passphrase: "{{ ssh_ed25519.password }}"
     path: ~/.ssh/id_ed25519
+  when: ssh_ed25519.create == true 

@@ -16,9 +16,11 @@ flatpaks:
   - com.spotify.Client
 
 ssh_rsa:
+  create: true
   password: "<password>"
   comment: "<comment>"
 
 ssh_ed25519:
+  create: true
   password: "<password>"
   comment: "<comment>"
