@@ -1,0 +1,10 @@
+- name: "Update packages"
+  become: true
+  package:
+    name: "*"
+    state: latest
+
+- name: "Update Flatpak packages"
+  become: true
+  shell:
+    cmd: flatpak update --noninteractive

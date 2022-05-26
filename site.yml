@@ -3,3 +3,5 @@
   roles:
   - role: initial-setup
   - role: install-general-software
+  - role: system-update
+  
