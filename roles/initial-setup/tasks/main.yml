@@ -1,4 +1,3 @@
----
 - name: Include vars
   include_vars: 
     file: ./configuration.yml
