@@ -1,15 +1,74 @@
-- name: "Download kubectl and checksum"
-  become: true
-  command:
-    cmd: |
-      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-      curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+- name: "Add repository for Kubectl (RedHat)"
+  ansible.builtin.yum_repository:
+    name: "kubernetes"
+    description: "Kubernetes Stable"
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    gpgcheck: true
+    enabled: true
+  when: ansible_facts['os_family'] == "RedHat"
 
-- name: "Compare checksums"    
-  set_fact:
-    checksum_result: 
+- name: "Add repository for Hashicorp (RedHat)"
+  ansible.builtin.yum_repository:
+    name: "hashicorp"
+    description: "Hashicorp Stable - $basearch"
+    baseurl: https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] }}/$releasever/$basearch/stable
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
+    gpgcheck: true
+    enabled: true
+  when: ansible_facts['os_family'] == "RedHat"
 
-- name: "Install kubectl"
-  become: true
-  command:
-    cmd: "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"
+- name: "Update yum cache"
+  ansible.builtin.yum:
+    update_cache: true
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: "Install kubectl and terraform"
+  ansible.builtin.package:
+    name:
+      - kubectl
+      - terraform
+    state: "present"
+
+- name: "Install Ansible-lint"
+  ansible.builtin.pip:
+    name: "ansible-lint"
+
+- name: "Helm installation"
+  when: ansible_facts['os_family'] == "Debian"
+  block:
+    - name: Download Helm
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3"
+        dest: "/tmp/get_helm.sh"
+        mode: "0700"
+
+    - name: "Install Helm"
+      ansible.builtin.command: 
+        cmd: "/tmp/get_helm.sh"
+      register: install_helm
+      changed_when: false
+
+- name: "Add repository for Hashicorp (Debian)"
+  when: ansible_facts['os_family'] == "Debian"
+  block:
+  - name: "Get latest release of k9s"
+    ansible.builtin.uri:
+      url: "https://api.github.com/repos/derailed/k9s/releases/latest"
+      return_content: true
+    register: k9s_github_download_link
+
+  - name: "Set download URL"
+    ansible.builtin.set_fact:
+      github_download_url:
+        "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) | first).browser_download_url }}"
+
+  - name: "Install k9s"
+    ansible.builtin.unarchive:
+      src: "{{ github_download_url }}"
+      remote_src: true
+      include: "k9s"
+      dest: "/usr/local/bin"
+      group: "root"
+      owner: "root"
+      mode: "0755"
