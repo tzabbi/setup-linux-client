@@ -38,15 +38,15 @@ bashrc:
     complete -o default -F __start_kubectl k
 
 git_config:
-- setting: "user.name"
-  scope: "global"
-  value: "$full_name"
-- setting: "user.email"
-  scope: "global"
-  value: "$email"
-- setting: "pull.rebase"
-  scope: "global"
-  value: "false" # set to merge
-- setting: "push.autoSetupRemote"
-  scope: "global"
-  value: "true"
+  - setting: "user.name"
+    scope: "global"
+    value: "$full_name"
+  - setting: "user.email"
+    scope: "global"
+    value: "$email"
+  - setting: "pull.rebase"
+    scope: "global"
+    value: "false" # set to merge
+  - setting: "push.autoSetupRemote"
+    scope: "global"
+    value: "true"

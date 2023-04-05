@@ -1,10 +1,11 @@
 - name: "Update packages"
   become: true
-  package:
+  ansible.builtin.package:
     name: "*"
     state: latest
 
 - name: "Update Flatpak packages"
   become: true
-  shell:
+  ansible.builtin.shell:
     cmd: flatpak update --noninteractive
+    
