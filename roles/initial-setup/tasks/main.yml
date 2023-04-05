@@ -1,26 +1,24 @@
 - name: Include vars
   include_vars: 
     file: ./configuration.yml
-    
-- name: Update all packages to the lastest state
-  become: true
-  package:
-      name: "*"
-      state: latest
 
 - name: "Initialze flathub"
   command:
     cmd: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
   when: ansible_facts['os_family'] == "RedHat"
-  
-- name: Add content to .bashrc
-  blockinfile:
+
+- name: "Configure git"
+  community.general.git_config:
+    name: "{{ item.setting }}"
+    scope: "{{ item.scope }}"
+    value: "{{ item.value }}"
+  with_items:
+    - "{{ git_config }}"
+
+- name: "Configure .bashrc"
+  ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
-    block: |
-      parse_git_branch() {
-        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-      }
-      export PS1='\[\e[0;1;38;5;34m\]\u\[\e[0;1;38;5;34m\]@\[\e[0;1;38;5;34m\]\h\[\e[0;1m\]:\[\e[0;1;38;5;33m\]\w \[\e[0;91m\]$(parse_git_branch)\[\e[0m\]\$ \[\e[0m\]'
+    block: "{{ private_config.bashrc.additional_content }}"
 
 - name: Generate an RSA OpenSSH keypair 
   community.crypto.openssh_keypair:
