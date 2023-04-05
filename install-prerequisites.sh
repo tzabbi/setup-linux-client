@@ -14,3 +14,5 @@ pip install ansible
 
 echo "installing Ansible community modules"
 ansible-galaxy collection install community.general
+
+# TODO: add debian based distro support
