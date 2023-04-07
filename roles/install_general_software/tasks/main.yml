@@ -37,14 +37,14 @@
     deb: "https://go.microsoft.com/fwlink/?LinkID=760868"
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Add flahub repository
+- name: "Add flahub repository"
   community.general.flatpak_remote:
     name: "flathub"
     state: "present"
     flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
     method: "user"
 
-- name: Install flatpak package {{ item }}
+- name: "Install flatpak packages"
   community.general.flatpak:
     name: "{{ item }}"
     state: "present"
