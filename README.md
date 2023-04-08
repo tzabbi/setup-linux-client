@@ -7,7 +7,7 @@ It sets the hostname, install different software packages and sets ssh key.
 After a fresh installation of a distro you need to install ansible via:
 
 ```bash
-./install-prerequisites
+./install-prerequisites.sh
 ```
 
 ## How to use this repository

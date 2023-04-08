@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "Update System"
- case $distro in
+distro="$(grep ^ID= /etc/os-release | sed 's/ID=//')"
+
+case $distro in
     fedora)
         echo "Distribution: Fedora"
         sudo dnf -y update
@@ -19,6 +20,13 @@ echo "Update System"
         sudo apt install python3.11
         sudo apt install python3-pip
     ;;
+    *)
+      echo "Distro: $distro is currently not supported. Pls create an Issue or a Pull Request"
+      echo "Exiting..."
+      read
+      exit 1
+    ;;
+esac
 
 echo "installing Ansible"
 pip install ansible
@@ -26,4 +34,3 @@ pip install ansible
 echo "installing Ansible community modules"
 ansible-galaxy collection install community.general
 
-# TODO: add debian based distro support
