@@ -13,11 +13,14 @@ case $distro in
     ;;
     
     ubuntu | pop)
-        sudo apt update 
+        echo "Distribution: $distro"
+        sudo apt update
         sudo apt install -y software-properties-common wget build-essential libncursesw5-dev libssl-dev \
           libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+        echo "installing pyhton3"
         sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt install python3.11
+        echo "installing Pip"
         sudo apt install python3-pip
     ;;
     *)
