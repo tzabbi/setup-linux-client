@@ -12,7 +12,7 @@
   ansible.builtin.yum_repository:
     name: "hashicorp"
     description: "Hashicorp Stable - $basearch"
-    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] }}/$releasever/$basearch/stable"
+    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] | lower }}/$releasever/$basearch/stable"
     gpgkey: "https://rpm.releases.hashicorp.com/gpg"
     gpgcheck: true
     enabled: true
