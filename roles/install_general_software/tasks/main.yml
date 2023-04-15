@@ -44,6 +44,13 @@
     flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
     method: "user"
 
+- name: "Initialize flathub"
+  community.general.flatpak_remote:
+    name: "flathub"
+    state: "present"
+    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
+    method: "user"
+
 - name: "Install flatpak packages"
   community.general.flatpak:
     name: "{{ item }}"

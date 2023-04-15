@@ -2,13 +2,6 @@
   ansible.builtin.include_vars:
     file: "./configuration.yml"
 
-- name: "Initialize flathub"
-  community.general.flatpak_remote:
-    name: "flathub"
-    state: "present"
-    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
-    method: "user"
-
 - name: "Configure git"
   community.general.git_config:
     name: "{{ item.setting }}"
