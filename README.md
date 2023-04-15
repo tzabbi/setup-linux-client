@@ -7,14 +7,7 @@ It sets the hostname, install different software packages and sets ssh key.
 After a fresh installation of a distro you need to install ansible via:
 
 ```bash
-python -m pip --version
-pip --version
-```
-
-If you install pip properly you have to install ansible
-
-```bash
-pip install ansible
+./install-prerequisites.sh
 ```
 
 ## How to use this repository
@@ -23,5 +16,13 @@ pip install ansible
 * run the command:
 
 ```bash
- ansible-playbook
+ ansible-playbook --diff --ask-become-pass site.yml
 ```
+
+## TODO:
+
+* change structure to best practice Ansible: https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html
+* change git defaults
+* add update software task
+* add task for fedora: gsettings set org.gnome.desktop.wm.preferences button-layout 'appmenu:minimize,maximize,close'
+* add pip support like flatpak or linux package installation

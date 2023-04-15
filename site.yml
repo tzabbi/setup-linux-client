@@ -1,0 +1,14 @@
+- name: "Configure developer linux machine"
+  hosts: localhost
+  roles:
+    - name: "Iniitial client setup"
+      role: initial_setup
+
+- name: "Install software"
+  hosts: localhost
+  become: true
+  roles:
+    - name: "Installation of general software"
+      role: install_general_software
+    - name: "Installation of DevOps specific packages"
+      role: install_devops_tools

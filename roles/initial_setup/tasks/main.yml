@@ -1,0 +1,33 @@
+- name: "Include vars"
+  ansible.builtin.include_vars:
+    file: "./configuration.yml"
+
+- name: "Configure git"
+  community.general.git_config:
+    name: "{{ item.setting }}"
+    scope: "{{ item.scope }}"
+    value: "{{ item.value }}"
+  with_items:
+    - "{{ git_config }}"
+
+- name: "Configure .bashrc"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: "{{ bashrc.additional_content }}"
+
+- name: "Generate an RSA OpenSSH keypair"
+  community.crypto.openssh_keypair:
+    type: "rsa"
+    size: "4096"
+    comment: "{{ ssh_rsa.comment }}"
+    passphrase: "{{ ssh_rsa.password }}"
+    path: "~/.ssh/id_rsa"
+  when: ssh_rsa.create
+
+- name: "Generate an ed25519 OpenSSH keypair"
+  community.crypto.openssh_keypair:
+    type: "ed25519"
+    comment: "{{ ssh_ed25519.comment }}"
+    passphrase: "{{ ssh_ed25519.password }}"
+    path: "~/.ssh/id_ed25519"
+  when: ssh_ed25519.create
