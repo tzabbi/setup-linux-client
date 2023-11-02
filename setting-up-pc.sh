@@ -39,3 +39,6 @@ pip install ansible
 
 echo "installing Ansible community modules"
 ansible-galaxy collection install community.general
+
+echo "Setting up your PC..."
+ ansible-playbook --diff --ask-become-pass site.yml
