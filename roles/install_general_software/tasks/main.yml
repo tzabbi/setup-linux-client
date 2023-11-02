@@ -1,3 +1,4 @@
+---
 - name: "Include vars"
   ansible.builtin.include_vars:
     file: "./configuration.yml"
@@ -9,7 +10,7 @@
   loop: "{{ packages }}"
 
 - name: Enable the RPM Fusion repository
-  dnf:
+  ansible.builtin.dnf:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
   when: ansible_distribution == 'Fedora'

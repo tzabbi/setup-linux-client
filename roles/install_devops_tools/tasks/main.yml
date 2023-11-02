@@ -1,3 +1,4 @@
+---
 - name: "Add repository for Kubectl (RedHat)"
   ansible.builtin.yum_repository:
     name: "kubernetes"
