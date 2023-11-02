@@ -29,7 +29,7 @@ case $distro in
     *)
       echo "Distro: $distro is currently not supported. Pls create an Issue or a Pull Request"
       echo "Exiting..."
-      read
+      read -r
       exit 1
     ;;
 esac
