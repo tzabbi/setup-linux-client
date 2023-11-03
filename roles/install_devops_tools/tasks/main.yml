@@ -1,3 +1,4 @@
+---
 - name: "Add repository for Kubectl (RedHat)"
   ansible.builtin.yum_repository:
     name: "kubernetes"
@@ -12,7 +13,8 @@
   ansible.builtin.yum_repository:
     name: "hashicorp"
     description: "Hashicorp Stable - $basearch"
-    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] | lower }}/$releasever/$basearch/stable"
+    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] | lower }}/$releasever/$basearch/stab\
+             le"
     gpgkey: "https://rpm.releases.hashicorp.com/gpg"
     gpgcheck: true
     enabled: true
@@ -33,7 +35,8 @@
 
     - name: "Add kubectl repo"
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
+        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb\
+              / /"
         filename: "kubernetes"
 
 - name: "Add repository for Hashicorp (Debian)"
@@ -58,7 +61,7 @@
     - name: "Add hashicorp repo"
       ansible.builtin.copy:
         content: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-         https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main"
+                 https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main"
         dest: "/etc/apt/sources.list.d/hashicorp.list"
         mode: "0644"
 
@@ -105,7 +108,8 @@
     - name: "Set download URL"
       ansible.builtin.set_fact:
         github_download_url:
-          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) | first).browser_download_url }}"
+          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) |\
+          first).browser_download_url }}"
 
     - name: "Install k9s"
       ansible.builtin.unarchive:
