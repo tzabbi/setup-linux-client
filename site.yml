@@ -1,3 +1,4 @@
+---
 - name: "Configure developer linux machine"
   hosts: localhost
   roles:
