@@ -4,7 +4,8 @@
     name: "kubernetes"
     description: "Kubernetes Stable"
     baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch"
-    gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+    gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-packag\
+            e-key.gpg"
     gpgcheck: true
     enabled: true
   when: ansible_facts['os_family'] == "RedHat"
@@ -13,7 +14,8 @@
   ansible.builtin.yum_repository:
     name: "hashicorp"
     description: "Hashicorp Stable - $basearch"
-    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] | lower }}/$releasever/$basearch/stable"
+    baseurl: "https://rpm.releases.hashicorp.com/{{ ansible_facts['distribution'] | lower }}/$releasever/$basearch/stab\
+             le"
     gpgkey: "https://rpm.releases.hashicorp.com/gpg"
     gpgcheck: true
     enabled: true
@@ -35,7 +37,8 @@
 
     - name: "Add kubectl repo"
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes\
+              -xenial main"
         filename: "kubernetes"
 
 - name: "Add repository for Hashicorp (Debian)"
@@ -60,7 +63,7 @@
     - name: "Add hashicorp repo"
       ansible.builtin.copy:
         content: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-         https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main"
+                 https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main"
         dest: "/etc/apt/sources.list.d/hashicorp.list"
         mode: "0644"
 
@@ -107,7 +110,8 @@
     - name: "Set download URL"
       ansible.builtin.set_fact:
         github_download_url:
-          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) | first).browser_download_url }}"
+          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) |\
+          first).browser_download_url }}"
 
     - name: "Install k9s"
       ansible.builtin.unarchive:
