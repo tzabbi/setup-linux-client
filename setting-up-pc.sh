@@ -29,7 +29,7 @@ case $distro in
     *)
       echo "Distro: $distro is currently not supported. Pls create an Issue or a Pull Request"
       echo "Exiting..."
-      read
+      read -r
       exit 1
     ;;
 esac
@@ -39,3 +39,6 @@ pip install ansible
 
 echo "installing Ansible community modules"
 ansible-galaxy collection install community.general
+
+echo "Setting up your PC..."
+ ansible-playbook --diff --ask-become-pass site.yml
