@@ -72,16 +72,9 @@
     flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
     method: "system"
 
-- name: "Initialize flathub"
-  community.general.flatpak_remote:
-    name: "flathub"
-    state: "present"
-    flatpakrepo_url: "https://flathub.org/repo/flathub.flatpakrepo"
-    method: "system"
-
 - name: "Install flatpak packages"
   community.general.flatpak:
     name: "{{ item }}"
     state: "present"
-    method: "user"
+    method: "system"
   loop: "{{ flatpaks }}"
