@@ -4,6 +4,7 @@ packages:
   - git
   - gpg
   - htop
+  - vim
   - wget
   - yakuake
 
