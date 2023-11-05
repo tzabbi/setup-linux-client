@@ -1,6 +1,7 @@
 ---
 packages:
   - curl
+  - flatpak
   - git
   - gpg
   - htop
