@@ -57,7 +57,7 @@
       ansible.builtin.command: >
        sudo gpg --dearmor /usr/share/keyrings/hashicorp-archive-keyring
       changed_when: false
-      when: not hashicorp_keyring.exsits
+      when: not hashicorp_keyring.exists
 
     - name: "Change File Mod gpg"
       ansible.builtin.file:
