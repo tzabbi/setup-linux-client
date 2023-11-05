@@ -24,7 +24,7 @@ case $distro in
         sudo apt install python3.11 -y
         echo "installing Pip"
         sudo apt install python3-pip -y
-        echo "PATH=\"$HOME/.local/bin/:$PATH\"" >> $HOME/.bashrc
+        echo "PATH=\"$HOME/.local/bin/:$PATH\"" >> "$HOME/.bashrc"
         export PATH="$HOME/.local/bin:$PATH"
     ;;
     
