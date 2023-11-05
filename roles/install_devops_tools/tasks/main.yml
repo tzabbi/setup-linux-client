@@ -35,8 +35,8 @@
 
     - name: "Add kubectl repo"
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb\
-              / /"
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.2\
+              8/deb/ /"
         filename: "kubernetes"
 
 - name: "Add repository for Hashicorp (Debian)"
@@ -48,10 +48,16 @@
         dest: "/usr/share/keyrings/hashicorp-archive-keyring"
         mode: "0644"
 
+    - name: "Check that the somefile.conf exists"
+      ansible.builtin.stat:
+        path: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+      register: hashicorp_keyring
+
     - name: "Unpack hashicorp gpg key"
       ansible.builtin.command: >
        sudo gpg --dearmor /usr/share/keyrings/hashicorp-archive-keyring
       changed_when: false
+      when: not hashicorp_keyring.exsits
 
     - name: "Change File Mod gpg"
       ansible.builtin.file:
