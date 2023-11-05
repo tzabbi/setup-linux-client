@@ -5,6 +5,7 @@ packages:
   - git
   - gpg
   - htop
+  - jq
   - vim
   - wget
   - yakuake
@@ -17,7 +18,7 @@ flatpaks:
   - org.signal.Signal
   - com.spotify.Client
 
-# TODO: generate oder import ssh keys and combine both
+# TODO: generate or import ssh keys and combine both
 ssh_rsa:
   create: false
   password: "<password>"
