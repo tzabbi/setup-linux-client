@@ -31,11 +31,11 @@
     - name: Add an Apt signing key to a specific keyring file
       ansible.builtin.apt_key:
         url: https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
-        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        keyring: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
 
     - name: "Add kubectl repo"
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb\
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb\
               / /"
         filename: "kubernetes"
 
