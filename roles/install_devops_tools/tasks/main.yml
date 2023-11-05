@@ -96,8 +96,7 @@
       register: install_helm
       changed_when: false
 
-- name: "Add repository for Hashicorp (Debian)"
-  when: ansible_facts['os_family'] == "Debian"
+- name: "Install k9s"
   block:
     - name: "Get latest release of k9s"
       ansible.builtin.uri:
@@ -108,7 +107,7 @@
     - name: "Set download URL"
       ansible.builtin.set_fact:
         github_download_url:
-          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) |\
+          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', 'k9s_Linux_amd64') |\
           first).browser_download_url }}"
 
     - name: "Install k9s"
