@@ -17,8 +17,15 @@ case $distro in
     ubuntu | pop)
         echo "Distribution: $distro"
         sudo apt update
-        echo "installing Ansible"
-        sudo apt install ansible -y
+                sudo apt install software-properties-common wget build-essential libncursesw5-dev libssl-dev \
+          libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y
+        echo "installing pyhton3"
+        sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt install python3.11 -y
+        echo "installing Pip"
+        sudo apt install python3-pip -y
+        echo "PATH=\"$HOME/.local/bin/:$PATH\"" >> "$HOME/.bashrc"
+        export PATH="$HOME/.local/bin:$PATH"
     ;;
     
     *)
@@ -28,6 +35,8 @@ case $distro in
       exit 1
     ;;
 esac
+echo "installing Ansible"
+pip install ansible
 
 echo "installing Ansible community modules"
 ansible-galaxy collection install community.general

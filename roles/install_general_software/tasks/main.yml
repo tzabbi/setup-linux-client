@@ -16,6 +16,7 @@
   with_items: 
     - "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020"
     - "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020"
+  when: ansible_facts['distribution'] == "Fedora"
 
 - name: "install the rpmfusion repo packages"
   ansible.builtin.dnf:
@@ -24,6 +25,7 @@
   with_items:
     - "http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
     - "http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+  when: ansible_facts['distribution'] == "Fedora"
 
 - name: "Install redhat based packages"
   ansible.builtin.dnf:
