@@ -62,7 +62,7 @@
         name: "code"
         state: "present"
 
-- name: "Check that the somefile.conf exists"
+- name: "Check if vscode is installed"
   ansible.builtin.stat:
     path: "/usr/bin/code"
   register: check_vs_code_installation

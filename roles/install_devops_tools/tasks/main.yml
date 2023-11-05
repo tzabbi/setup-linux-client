@@ -48,7 +48,7 @@
         dest: "/usr/share/keyrings/hashicorp-archive-keyring"
         mode: "0644"
 
-    - name: "Check that the somefile.conf exists"
+    - name: "Check hashicorp keyring is installed"
       ansible.builtin.stat:
         path: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
       register: hashicorp_keyring
