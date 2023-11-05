@@ -113,8 +113,8 @@
     - name: "Set download URL"
       ansible.builtin.set_fact:
         github_download_url:
-          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', 'k9s_Linux_amd64') |\
-          first).browser_download_url }}"
+          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', 'k9s_Linux_amd64')\
+           | first).browser_download_url }}"
 
     - name: "Install k9s"
       ansible.builtin.unarchive:
