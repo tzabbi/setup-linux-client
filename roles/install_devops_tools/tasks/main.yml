@@ -31,12 +31,12 @@
     - name: Add an Apt signing key to a specific keyring file
       ansible.builtin.apt_key:
         url: https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
-        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        keyring: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
 
     - name: "Add kubectl repo"
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb\
-              / /"
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.2\
+              8/deb/ /"
         filename: "kubernetes"
 
 - name: "Add repository for Hashicorp (Debian)"
@@ -48,10 +48,16 @@
         dest: "/usr/share/keyrings/hashicorp-archive-keyring"
         mode: "0644"
 
+    - name: "Check hashicorp keyring is installed"
+      ansible.builtin.stat:
+        path: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+      register: hashicorp_keyring
+
     - name: "Unpack hashicorp gpg key"
       ansible.builtin.command: >
        sudo gpg --dearmor /usr/share/keyrings/hashicorp-archive-keyring
       changed_when: false
+      when: not hashicorp_keyring.exists
 
     - name: "Change File Mod gpg"
       ansible.builtin.file:
@@ -96,8 +102,7 @@
       register: install_helm
       changed_when: false
 
-- name: "Add repository for Hashicorp (Debian)"
-  when: ansible_facts['os_family'] == "Debian"
+- name: "Install k9s"
   block:
     - name: "Get latest release of k9s"
       ansible.builtin.uri:
@@ -108,8 +113,8 @@
     - name: "Set download URL"
       ansible.builtin.set_fact:
         github_download_url:
-          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', k9s_Linux_amd64) |\
-          first).browser_download_url }}"
+          "{{ (k9s_github_download_link.json.assets | selectattr('browser_download_url', 'contains', 'k9s_Linux_amd64')\
+           | first).browser_download_url }}"
 
     - name: "Install k9s"
       ansible.builtin.unarchive:

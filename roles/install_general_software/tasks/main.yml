@@ -62,10 +62,15 @@
         name: "code"
         state: "present"
 
+- name: "Check if VSCode is installed"
+  ansible.builtin.stat:
+    path: "/usr/bin/code"
+  register: check_vs_code_installation
+
 - name: "Install VSCode on Debian based Linux"
   ansible.builtin.apt:
     deb: "https://go.microsoft.com/fwlink/?LinkID=760868"
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_facts['os_family'] == "Debian" and not check_vs_code_installation.stat.exists
 
 - name: "Add flahub repository"
   community.general.flatpak_remote:
