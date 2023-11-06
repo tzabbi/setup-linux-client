@@ -1,5 +1,6 @@
 ---
 packages:
+  - bash-completion
   - curl
   - flatpak
   - git
